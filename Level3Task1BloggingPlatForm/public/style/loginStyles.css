@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    padding: 0px;
+    background-color: rgba(241, 233, 233, 0.874);
+    margin: 0px;
+    
+}
+
+input {
+    height: 2rem;
+    background-color: rgb(185, 146, 221);
+    border-radius: 1rem;
+    border-width: 0px;
+    outline: 0px;
+    padding: 0.5rem;
+    font-family: 'Roboto';
+    transition: 0.5s;
+    margin: 0px 5px 0px 5px;
+}
+
+input:hover ,input:focus {
+    border-radius: 0.65rem;
+    margin:0px;
+}
+
+label {
+    font-family: 'Roboto';
+}
+
+a {
+    color: black;
+    align-self:  center;
+    margin: 7px;
+    transition: 0.4s;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(47, 54, 244);
+}
+
+.right-image {
+    height: 100vh;
+    width: 50vw;
+    background-image: url("../images/right.png");
+    border-radius: 0 3rem 3rem 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.left-form {
+    padding: 10vw;
+    width: 50vw;
+}
+@media screen and (max-width: 600px){
+    body {
+        flex-direction: column;
+    }
+
+    .right-image {
+        height: 35vh;
+        width: 100vw;
+        border-radius: 0 0 3rem 3rem;
+    }
+
+    .left-form {
+        width: 100vw;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.label {
+    color: rgba(13, 145, 240, 0.791);
+}
+
+.label-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.title {
+    margin-bottom: 22px;
+}
+
+.button{
+    height: 2rem;
+    border-radius: 1rem;
+    transition: 0.5s;
+    margin: 0 5px 0 5px;
+}
+
+.button:hover {
+    border-radius: 0.8rem;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.submit-button {
+    color: white;
+    background-color: black;
+}
+
+
+.roboto-light {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .roboto-medium {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .roboto-bold {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .text-l {
+    font-size: large;
+  }
+
+  .text-xl {
+    font-size: larger;
+  }
