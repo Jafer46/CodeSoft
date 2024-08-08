@@ -10,21 +10,21 @@
 <body>
     <div class="right-image"></div>
     <div class="left-form">
-        <form class="form">
+        <form class="form" method="POST" action="/user/create">
             <p class="roboto-bold text-xl title">Create New Account</p>
             <div class="label-wrapper">
                 <label class="label">User Name</label>
-                <input type="email" maxlength="50" minlength="2" class="input"/>
+                <input name="username" type="text" maxlength="50" minlength="2" class="input"/>
             </div>
             <div class="label-wrapper">
                 <label class="label">Email</label>
-                <input type="email" maxlength="50" minlength="2" class="input"/>
+                <input name="email" type="email" maxlength="50" minlength="2" class="input"/>
             </div>
             <div class="label-wrapper">
                 <label class="label">Password</label>
-                <input type="password" maxlength="50" minlength="2" class="input"/>
+                <input name="password" type="password" maxlength="50" minlength="2" class="input"/>
             </div>
-            <button class="button submit-button">Login</button>
+            <button class="button submit-button" type="submit">Login</button>
             <a href="/login">Have an account? login</a>
         </form>
     </div>

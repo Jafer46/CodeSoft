@@ -1,0 +1,181 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  width: 100vw;
+}
+
+p {
+  margin: 0;
+}
+
+.blog-grid {
+  display: flex;
+  gap: 8px;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 200px;
+  row-gap: 8px;
+  border-radius: 0.5rem;
+}
+.blog-card:hover {
+  box-shadow: 2px 1px 3px rgb(75, 75, 75);
+}
+
+.blog-image {
+  border-radius: 0.5rem;
+  height: 150px;
+  width: 100%;
+  background-image: url("../images/right.png");
+  background-size: cover;
+}
+
+.blog-title {
+  font-size: larger;
+  font-weight: bold;
+  margin: 0;
+}
+
+.blog-text {
+  font-size: smaller;
+  color: rgb(64, 63, 63);
+}
+
+.blog-icon-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+.blog-icon {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-image: url("../images/right.png");
+  background-size: cover;
+}
+
+.navbar {
+  display: flex;
+  height: 5vh;
+  background-color: beige;
+}
+
+.nabar-brand {
+  border-radius: 4px;
+  height: 32px;
+  width: 32px;
+}
+
+
+nav {
+  background-color: white;
+}
+
+nav ul {
+  width:  100%;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+nav li {
+  height: 50px;
+}
+
+nav a {
+  height: 100%;
+  padding: 0 30px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+nav a:hover {
+  background-color: #f0f0f0;
+}
+
+nav li:first-child {
+  margin-right: auto;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 250px;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.323);
+  backdrop-filter: blur(10px);
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  transition: display 0.3s ease-in-out;
+}
+
+.sidebar .show {
+  display: flex;
+}
+
+.sidebar li {
+  width: 100%;
+}
+
+.sidebar a {
+  width: 100%;
+}
+.menu-bar {
+  display: none;
+}
+@media screen and (max-width: 800px){
+  .hideOnMobile {
+    display: none;
+  }
+  .menu-bar {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 400px){
+  .sidebar {
+    width: 100%;
+  }
+}
+
+
+.image-slider {
+  padding: 1vw;
+  width: 800px;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  background-color: black;
+}
+
+.slide img {
+  border-radius: 10px;
+  width: 100%;
+  object-fit: cover;
+}
+
+

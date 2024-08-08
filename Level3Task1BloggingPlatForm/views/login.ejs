@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/loginStyles.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/loginStyles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="right-image"></div>
     <div class="left-form">
-        <form class="form">
-            <p class="roboto-bold text-xl title">Login to Account</p>
-            <div class="label-wrapper">
-                <label class="label">Email</label>
-                <input type="email" maxlength="50" minlength="2" class="input"/>
-            </div>
-            <div class="label-wrapper">
-                <label class="label">Password</label>
-                <input type="password" maxlength="50" minlength="2" class="input"/>
-            </div>
-            <button class="button submit-button">Login</button>
-            <a href="/signup">New here? Sign up</a>
-        </form>
+      <form class="form" method="POST" action="/user/login">
+        <p class="roboto-bold text-xl title">Login to Account</p>
+        <div class="label-wrapper">
+          <label class="label">Email</label>
+          <input name="email" type="email" maxlength="50" minlength="2" class="input" />
+        </div>
+        <div class="label-wrapper">
+          <label class="label">Password</label>
+          <input name="password" type="password" maxlength="50" minlength="2" class="input" />
+        </div>
+        <button class="button submit-button" type="submit">Login</button>
+        <a href="/signup">New here? Sign up</a>
+      </form>
     </div>
-</body>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    >
+      Toastify({
+        text: "This is a toast",
+        className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+    </script>
+  </body>
 </html>

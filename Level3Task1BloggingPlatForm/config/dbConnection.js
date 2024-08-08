@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const mongoStore = require ('connect-mongo');
 
 //creating database connection
 const dbconnection = async() => {
@@ -11,7 +12,7 @@ const dbconnection = async() => {
     }catch(err){
         console.log(err);
     }
-}           
+}
 
 
 module.exports = dbconnection;
