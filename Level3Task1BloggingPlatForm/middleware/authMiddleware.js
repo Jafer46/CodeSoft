@@ -1,10 +1,9 @@
-const asyncHandler = require('express-async-handler');
-const { MESSAGETYPE } = require('../constants/messageConstant');
+const asyncHandler = require('express-async-handler')
+const { MESSAGETYPE } = require('../constants/messageConstant')
 
 const authenticate = asyncHandler(async (req, res, next) => {
-    
-    next();
+  console.log(req.session.user)
+  next()
 })
 
-
-module.exports = authenticate;
+module.exports = authenticate

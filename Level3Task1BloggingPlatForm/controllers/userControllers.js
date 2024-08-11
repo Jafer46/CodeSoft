@@ -29,15 +29,15 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   //req.session.user = user;
   req.session.isAuth = true
+  req.session.user = user
   await req.session.save()
   res.cookie('sessionId', req.sessionID)
-  return res
-    .status(STATUS.OK)
-    .render('index.ejs', {
-      title: 'Home',
-      message: 'Login successful!',
-      type: MESSAGETYPE.SUCCESS
-    })
+  // return res.status(STATUS.OK).render('index.ejs', {
+  //   title: 'Home',
+  //   message: 'Login successful!',
+  //   type: MESSAGETYPE.SUCCESS
+  // })
+  return res.redirect('/home')
 })
 
 const createUser = asyncHandler(async (req, res) => {
@@ -61,13 +61,11 @@ const createUser = asyncHandler(async (req, res) => {
   req.session.isAuth = true
   req.session.save()
   res.cookie('sessionId', req.sessionID)
-  return res
-    .status(STATUS.CREATED)
-    .render('index.ejs', {
-      title: 'Home',
-      message: 'acount created!',
-      type: MESSAGETYPE.SUCCESS
-    })
+  return res.status(STATUS.CREATED).render('index.ejs', {
+    title: 'Home',
+    message: 'acount created!',
+    type: MESSAGETYPE.SUCCESS
+  })
 })
 
 const updateUser = asyncHandler(async (req, res) => {

@@ -5,8 +5,10 @@
   margin: 0;
 }
 
-body{
-  width: 100vw;
+body {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 p {
@@ -34,7 +36,7 @@ p {
   border-radius: 0.5rem;
   height: 150px;
   width: 100%;
-  background-image: url("../images/right.png");
+  background-image: url('../images/right.png');
   background-size: cover;
 }
 
@@ -60,7 +62,7 @@ p {
   height: 24px;
   width: 24px;
   border-radius: 50%;
-  background-image: url("../images/right.png");
+  background-image: url('../images/right.png');
   background-size: cover;
 }
 
@@ -76,13 +78,12 @@ p {
   width: 32px;
 }
 
-
 nav {
   background-color: white;
 }
 
 nav ul {
-  width:  100%;
+  width: 100%;
   list-style: none;
   display: flex;
   justify-content: flex-end;
@@ -141,7 +142,7 @@ nav li:first-child {
 .menu-bar {
   display: none;
 }
-@media screen and (max-width: 800px){
+@media screen and (max-width: 800px) {
   .hideOnMobile {
     display: none;
   }
@@ -150,12 +151,11 @@ nav li:first-child {
   }
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 400px) {
   .sidebar {
     width: 100%;
   }
 }
-
 
 .image-slider {
   padding: 1vw;
@@ -178,4 +178,102 @@ nav li:first-child {
   object-fit: cover;
 }
 
+.form-container {
+  width: 600px;
+  height: 100vh;
+  align-self: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 2px;
+}
 
+@media screen and (max-width: 800px) {
+  .form-container {
+    max-width: 100%;
+  }
+}
+
+.form-container input {
+  margin-bottom: 10px;
+  background-color: aliceblue;
+  border-radius: 10px;
+  outline-color: aqua;
+  height: 2rem;
+  border: 1px;
+  border-color: azure;
+  padding-left: 10px;
+}
+
+.form-container textarea {
+  margin-bottom: 10px;
+  background-color: aliceblue;
+  border-radius: 10px;
+  outline-color: aqua;
+  border: 0;
+  padding: 10px;
+  max-height: 4rem;
+}
+
+.form-container input[type='file']::file-selector-button {
+  border: 0;
+  height: 34px;
+  content: 'Image';
+}
+
+.form-container input[type='file'] {
+  justify-content: center;
+  padding-left: 0;
+}
+
+.form-container label {
+  color: rgba(13, 145, 240, 0.791);
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.button {
+  flex-grow: 1;
+  height: 1.75rem;
+  border-radius: 0.85rem;
+  transition: 0.3s;
+}
+
+.button:hover {
+  height: 1.8rem;
+  border-radius: 0.75rem;
+  box-shadow: 0px 10px 8px -9px;
+}
+
+.button-cancel {
+  background-color: white;
+}
+.button-submit {
+  background-color: chocolate;
+  border: 0;
+}
+
+.login-button {
+  background-color: black;
+  color: wheat;
+  padding: 5px;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+.mobile {
+  display: flex !important;
+}
+
+@media screen and (max-width: 800px) {
+  .mobile {
+    display: none !important;
+  }
+}
