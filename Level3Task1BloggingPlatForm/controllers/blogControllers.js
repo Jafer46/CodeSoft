@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const Blog = require('../models/Blog')
 const { MESSAGETYPE } = require('../constants/messageConstant')
 const { STATUS } = require('../constants/statusCodes')
+const cloudinary = require('../config/cloudinary')
 
 const getBlogs = asyncHandler(async (req, res) => {})
 
@@ -16,6 +17,16 @@ const getBlog = asyncHandler(async (req, res) => {
 })
 
 const createBlog = asyncHandler(async (req, res) => {
+  let imageUrl = ''
+  cloudinary.uploader.upload(req.file.path, (err, result) => {
+    if (err) {
+      return res
+        .status(STATUS.SERVER_ERROR)
+        .json({ message: 'image is not uploaded', type: MESSAGETYPE.ERROR })
+    }
+    imageUrl = result.secure_url
+  })
+
   if (!req.session.isAtuh || !req.session.user) {
     return res
       .status(STATUS.NOT_FOUND)
@@ -29,9 +40,10 @@ const createBlog = asyncHandler(async (req, res) => {
     bloggerId: user._id,
     bloggerAvatar: user.avatar,
     bloggerName: user.username,
-    view
+    view,
+    imageUrl
   })
-  return res.redirect()
+  return res.redirect('/myblogs')
 })
 
 const updateBlog = asyncHandler(async (req, res) => {

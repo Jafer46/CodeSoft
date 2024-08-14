@@ -7,7 +7,6 @@ const { MESSAGETYPE } = require('../constants/messageConstant')
 router.get(
   '/home',
   asyncHandler(async (req, res) => {
-    console.log(res.data)
     const user = req.session.user
     res.render('index.ejs', { title: 'Home', user: user })
   })
@@ -31,10 +30,25 @@ router.get(
 
 //goto create blog page
 router.get(
-  'create',
+  '/create',
   asyncHandler(async (req, res) => {
     const user = req.session.user
     return res.render('createBlog.ejs', { title: 'Create blog', user: user })
+  })
+)
+
+//goto my blogs page
+router.get(
+  '/myblogs',
+  asyncHandler(async (req, res) => {
+    const user = req.session.user
+    console.log(user)
+    const blogs = await Blog.find({ bloggerId: user._id })
+    return res.render('myblogs.ejs', {
+      title: 'my blogs',
+      user: user,
+      blogs: blogs
+    })
   })
 )
 
