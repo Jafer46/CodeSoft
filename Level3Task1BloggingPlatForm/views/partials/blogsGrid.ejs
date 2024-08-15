@@ -1,5 +1,5 @@
 <div>
-  <% if (blogs && blogs.length > 0) { blogs.forEach(blog => {
+  <% if (blogs && blogs.length > 0) { blogs.forEach(blog => {%>
   <div class="blog">
     <div class="blog-card">
       <img src="<%=blog.imageUrl%>" alt="blog" class="blog-image" />
@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  }); } else { %>
+  <%}); } else { %>
   <div>no blog found</div>
   <% } %>
 </div>

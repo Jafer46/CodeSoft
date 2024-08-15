@@ -50,6 +50,10 @@ app.get('/a', authenticate, (req, res) => {
   res.render('a', { title: 'a', user: null })
 })
 
+app.get('/search', (req, res) => {
+  res.render('search', { title: 'search', user: null, blogs: null })
+})
+
 app.get('/blog/create', (req, res) => {
   res.render('createBlog', { title: 'create blog', user: null })
 })
