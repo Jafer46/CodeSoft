@@ -14,7 +14,23 @@ const getComments = asyncHandler(async (req, res) => {
 })
 
 const getComment = asyncHandler(async (req, res) => {})
-const createComment = asyncHandler(async (req, res) => {})
+const createComment = asyncHandler(async (req, res) => {
+  const { content, blogId } = req.body
+  if (!content) {
+    return res
+      .status(STATUS.BAD_REQUEST)
+      .json({ message: 'Content is required', type: MESSAGETYPE.ERROR })
+  }
+  const user = req.session.user
+  const commentCreated = await Comment.create({
+    blogId,
+    content,
+    commenterId: user._id,
+    commenterName: user.username,
+    commenterAvatar: user.avatar
+  })
+  return res.redirect(`/blog/${blogId}`)
+})
 
 //todo: this update comment is not finished yet
 const updateComment = asyncHandler(async (req, res) => {

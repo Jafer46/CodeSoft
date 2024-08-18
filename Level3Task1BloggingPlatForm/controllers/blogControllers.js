@@ -17,21 +17,17 @@ const getBlog = asyncHandler(async (req, res) => {
 })
 
 const createBlog = asyncHandler(async (req, res) => {
-  let imageUrl = ''
-  cloudinary.uploader.upload(req.file.path, (err, result) => {
-    if (err) {
-      return res
-        .status(STATUS.SERVER_ERROR)
-        .json({ message: 'image is not uploaded', type: MESSAGETYPE.ERROR })
-    }
-    imageUrl = result.secure_url
-  })
+  console.log(req.file.path)
+  const result = await cloudinary.uploader.upload(req.file.path)
+  console.log(result.secure_url)
+  console.log(req.session.user)
 
-  if (!req.session.isAtuh || !req.session.user) {
+  if (!req.session.isAuth || !req.session.user) {
     return res
       .status(STATUS.NOT_FOUND)
       .render('404.ejs', { message: 'User not found' })
   }
+  const imageUrl = result.secure_url
   const user = req.session.user
   const { title, description, view = 0 } = req.body
   const createdBlog = await Blog.create({
