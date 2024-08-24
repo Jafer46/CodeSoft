@@ -9,8 +9,9 @@ const { MESSAGETYPE } = require('../constants/messageConstant')
 router.get(
   '/home',
   asyncHandler(async (req, res) => {
-    const user = req.session.user
-    res.render('index.ejs', { title: 'Home', user: user })
+    const message = req.flash('message')
+    const user = req.session.user ?? null
+    res.render('index.ejs', { title: 'Home', user: user, message })
   })
 )
 
@@ -18,6 +19,7 @@ router.get(
 router.get(
   '/blog/:id',
   asyncHandler(async (req, res) => {
+    const message = req.flash('message')
     const blog = await Blog.findOne({ _id: req.params.id })
     if (!blog) {
       return res.render('404.ejs', {
@@ -33,7 +35,8 @@ router.get(
       title: 'blog',
       user: user,
       blog: blog,
-      comments: comments
+      comments: comments,
+      message
     })
   })
 )
@@ -42,8 +45,13 @@ router.get(
 router.get(
   '/create',
   asyncHandler(async (req, res) => {
+    const message = req.flash('message')
     const user = req.session.user
-    return res.render('createBlog.ejs', { title: 'Create blog', user: user })
+    return res.render('createBlog.ejs', {
+      title: 'Create blog',
+      user: user,
+      message
+    })
   })
 )
 
@@ -51,13 +59,15 @@ router.get(
 router.get(
   '/myblogs',
   asyncHandler(async (req, res) => {
+    const message = req.flash('message')
     const user = req.session.user
     const blogs = await Blog.find({ bloggerId: user._id })
     return res.render('myblogs.ejs', {
       title: 'my blogs',
       user: user,
       blogger: user,
-      blogs: blogs
+      blogs: blogs,
+      message
     })
   })
 )
@@ -65,6 +75,7 @@ router.get(
 router.get(
   '/othersblogs/:id',
   asyncHandler(async (req, res) => {
+    const message = req.flash('message')
     const userId = req.params.id
     const user = req.session.user ?? null
     const blogger = await User.findOne({ _id: userId })
@@ -79,7 +90,8 @@ router.get(
       title: "other's blogs",
       user: user,
       bloger: blogger,
-      blogs: blogs
+      blogs: blogs,
+      message
     })
   })
 )
@@ -87,11 +99,13 @@ router.get(
 router.get(
   '/search',
   asyncHandler(async (req, res) => {
+    const message = req.flash('message')
     const user = req.session.user ?? null
     return res.render('search.ejs', {
       title: 'search',
       user: user,
-      blogs: null
+      blogs: null,
+      message
     })
   })
 )
@@ -100,6 +114,7 @@ router.get(
 router.post(
   '/search',
   asyncHandler(async (req, res) => {
+    const message = req.flash('message')
     const user = req.session.user ?? null
     console.log('rendered')
     if (!req.body) {
@@ -107,7 +122,21 @@ router.post(
     }
     const query = req.body.query
     const blogs = await Blog.find()
-    return res.render('search', { title: 'search', user: user, blogs: blogs })
+    return res.render('search', {
+      title: 'search',
+      user: user,
+      blogs: blogs,
+      message
+    })
+  })
+)
+
+//logout
+router.get(
+  '/logout',
+  asyncHandler(async (req, res) => {
+    req.session.destroy()
+    return res.redirect('/home')
   })
 )
 

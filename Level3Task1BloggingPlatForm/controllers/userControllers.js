@@ -9,23 +9,29 @@ const getUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res
       .status(STATUS.NOT_FOUND)
-      .json({ message: 'User Not Found!', type: MESSAGETYPE.ERROR })
+      .json({
+        message: { message: 'User Not Found!', type: MESSAGETYPE.ERROR }
+      })
   }
 })
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, username, password } = req.body
+  const { email, password } = req.body
   const user = await User.findOne({ email })
   if (!user) {
     return res
       .status(STATUS.NOT_FOUND)
-      .json({ message: 'User Not Found!', type: MESSAGETYPE.ERROR })
+      .json({
+        message: { message: 'User Not Found!', type: MESSAGETYPE.ERROR }
+      })
   }
   const checked = await bcrypt.compare(password, user.password)
   if (!checked) {
     return res
       .status(STATUS.UNAUTHORIZED)
-      .json({ message: 'Incorrect password!', type: MESSAGETYPE.ERROR })
+      .json({
+        message: { message: 'Incorrect password!', type: MESSAGETYPE.ERROR }
+      })
   }
   //req.session.user = user;
   req.session.isAuth = true
@@ -46,7 +52,7 @@ const createUser = asyncHandler(async (req, res) => {
   if (user) {
     return res
       .status(STATUS.CONFLICT)
-      .json({ message: 'Email exist!', type: MESSAGETYPE.ERROR })
+      .json({ message: { message: 'Email exist!', type: MESSAGETYPE.ERROR } })
   }
   const hashedPassword = await bcrypt.hash(password, 12)
   console.log(hashedPassword)
@@ -63,8 +69,10 @@ const createUser = asyncHandler(async (req, res) => {
   res.cookie('sessionId', req.sessionID)
   return res.status(STATUS.CREATED).render('index.ejs', {
     title: 'Home',
-    message: 'acount created!',
-    type: MESSAGETYPE.SUCCESS
+    message: {
+      message: 'acount created!',
+      type: MESSAGETYPE.SUCCESS
+    }
   })
 })
 
@@ -74,7 +82,9 @@ const updateUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res
       .status(STATUS.NOT_FOUND)
-      .json({ message: "User doesn't exist!", type: MESSAGETYPE.ERROR })
+      .json({
+        message: { message: "User doesn't exist!", type: MESSAGETYPE.ERROR }
+      })
   }
   user.username = username ?? user.username
   user.email = email ?? user.email
@@ -82,7 +92,7 @@ const updateUser = asyncHandler(async (req, res) => {
   await user.save()
   return res
     .status(STATUS.OK)
-    .json({ message: 'User updated!', type: MESSAGETYPE.SUCCESS })
+    .json({ message: { message: 'User updated!', type: MESSAGETYPE.SUCCESS } })
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
@@ -90,12 +100,14 @@ const deleteUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res
       .status(STATUS.NOT_FOUND)
-      .json({ message: "User doesn't exist!", type: MESSAGETYPE.ERROR })
+      .json({
+        message: { message: "User doesn't exist!", type: MESSAGETYPE.ERROR }
+      })
   }
   await user.delete()
   return res
     .status(STATUS.OK)
-    .json({ message: 'User deleted!', type: MESSAGETYPE.SUCCESS })
+    .json({ message: { message: 'User deleted!', type: MESSAGETYPE.SUCCESS } })
 })
 
 module.exports = { loginUser, createUser }

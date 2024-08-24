@@ -9,7 +9,9 @@ const getBlogs = asyncHandler(async (req, res) => {})
 const getBlog = asyncHandler(async (req, res) => {
   const blog = Blog.findOne({ _id: req.params.id })
   if (blog) {
-    return res.json({ message: 'blog not found', type: MESSAGETYPE.ERROR })
+    return res.json({
+      message: { message: 'blog not found', type: MESSAGETYPE.ERROR }
+    })
   }
   blog.view++
   await blog.save()
@@ -25,7 +27,9 @@ const createBlog = asyncHandler(async (req, res) => {
   if (!req.session.isAuth || !req.session.user) {
     return res
       .status(STATUS.NOT_FOUND)
-      .render('404.ejs', { message: 'User not found' })
+      .render('404.ejs', {
+        message: { message: 'blog not found', type: MESSAGETYPE.ERROR }
+      })
   }
   const imageUrl = result.secure_url
   const user = req.session.user
@@ -45,23 +49,25 @@ const createBlog = asyncHandler(async (req, res) => {
 const updateBlog = asyncHandler(async (req, res) => {
   const blog = Blog.findOne({ _id: req.params.id })
   if (blog) {
-    return res.json({ message: 'blog not found', type: MESSAGETYPE.ERROR })
+    return res.json({
+      message: { message: 'blog not found', type: MESSAGETYPE.ERROR }
+    })
   }
 
   return res.json({
-    message: 'blog successfuly updated',
-    type: MESSAGETYPE.SUCCESS
+    message: { message: 'blog updated', type: MESSAGETYPE.SUCCESS }
   })
 })
 
 const deleteBlog = asyncHandler(async (req, res) => {
   const blog = Blog.findOne({ _id: req.params.id })
   if (blog) {
-    return res.json({ message: 'blog not found', type: MESSAGETYPE.ERROR })
+    return res.json({
+      message: { message: 'blog not found', type: MESSAGETYPE.ERROR }
+    })
   }
   return res.json({
-    message: 'blog successfuly deleted',
-    type: MESSAGETYPE.SUCCESS
+    message: { message: 'blog deleted', type: MESSAGETYPE.SUCCESS }
   })
 })
 

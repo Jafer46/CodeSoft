@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/mainStyles.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/mainStyles.css" />
+    <link rel="icon" href="/images/camera.png" />
     <script defer src="/style/main.js"></script>
     <title><%= title %></title>
-</head>
+  </head>
+  <body></body>
+</html>
+<% if (message) {%>
+<div class="message show <% message.type %>">
+  <p><%=message.message%></p>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 -960 960 960"
+    width="24px"
+    fill="#5f6368"
+    class="message-close"
+  >
+    <path
+      d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+    />
+  </svg>
+</div>
+<% } %>

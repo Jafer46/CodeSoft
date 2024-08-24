@@ -49,7 +49,7 @@ a {
   display: flex;
   flex-direction: column;
   height: 300px;
-  width: 250px;
+  width: auto;
   row-gap: 8px;
   border-radius: 0.5rem;
 }
@@ -235,6 +235,7 @@ nav li:first-child {
   position: relative;
   overflow: hidden;
   margin: 10px 0px;
+  border-radius: 10px;
 }
 .slide {
   width: 100%;
@@ -595,7 +596,7 @@ nav li:first-child {
 }
 
 .show {
-  height: 100px;
+  height: auto;
   padding: 10px;
 }
 
@@ -623,4 +624,32 @@ nav li:first-child {
   width: 20vh;
   height: 20vh;
   border-radius: 50%;
+}
+
+.message {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  display: none;
+  align-items: center;
+  padding: 10px;
+  width: auto;
+  height: auto;
+  z-index: 100;
+}
+@media screen and (max-width: 360px) {
+  .message {
+    width: 100%;
+    margin: 0 10px;
+  }
+}
+
+.success {
+  background-color: rgba(47, 255, 144, 0.917);
+  color: green;
+}
+
+.error {
+  background-color: rgba(207, 68, 68, 0.855);
+  color: red;
 }

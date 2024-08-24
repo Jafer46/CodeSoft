@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const authenticate = require('./middleware/authMiddleware')
 const mongoStore = require('connect-mongo')
+const flash = require('connect-flash')
 
 //intializing our databases connecton
 //you can see the config file for more info
@@ -31,6 +32,7 @@ app.use(
     saveUninitialized: false
   })
 )
+app.use(flash())
 app.use('/api', require('./routes/apiRoutes'))
 app.use('/', require('./routes/pagesRoutes'))
 

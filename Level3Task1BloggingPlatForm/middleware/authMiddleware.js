@@ -2,7 +2,10 @@ const asyncHandler = require('express-async-handler')
 const { MESSAGETYPE } = require('../constants/messageConstant')
 
 const authenticate = asyncHandler(async (req, res, next) => {
-  console.log(req.session.user)
+  if (!req.session.isAuth && !req.session.user) {
+    req.flash('message', { message: 'login required', type: MESSAGETYPE.ERROR })
+    return
+  }
   next()
 })
 
