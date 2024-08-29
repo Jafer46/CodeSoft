@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 
 const projectSchema = mongoose.Schema(
   {
+    creatorId: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User'
+    },
     title: {
       type: String
     },
@@ -9,13 +13,18 @@ const projectSchema = mongoose.Schema(
       type: String
     },
     userList: {
-      type: [mongoose],
+      type: [mongoose.Types.ObjectId],
       ref: 'User'
+    },
+    priority: {
+      type: String
     },
     status: {
       type: Number
     },
-    dueDate: {}
+    deadline: {
+      type: Date
+    }
   },
   {
     timestamps: true

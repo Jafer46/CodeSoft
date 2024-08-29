@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler')
 const User = require('../models/user')
 const { STATUSCODE } = require('../constants/statuscode')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, username, email, password } = req.body
@@ -8,7 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(STATUSCODE.VALIDATION_ERROR)
     throw new Error('Mandatory fields needed')
   }
-  const userExist = await User.find({ email })
+  const userExist = await User.findOne({ email: email })
   if (userExist) {
     res.status(STATUSCODE.CONFLICT)
     throw new Error('Usre already exists')
@@ -20,7 +22,7 @@ const registerUser = asyncHandler(async (req, res) => {
     avatar: '',
     email,
     password: hashedPassword,
-    bio
+    bio: ''
   })
   return res.status(STATUSCODE.CREATED).json(user)
 })
@@ -31,7 +33,7 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(STATUSCODE.VALIDATION_ERROR)
     throw new Error('Mandatory fields needed')
   }
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email: email })
   if (!user) {
     res.status(STATUSCODE.NOT_FOUND)
     throw new Error('user not found')
@@ -45,7 +47,7 @@ const loginUser = asyncHandler(async (req, res) => {
     {
       user: {
         email: user.email,
-        id: user.id
+        id: user._id
       }
     },
     process.env.ACCESS_TOKEN_SECRETE,
@@ -59,7 +61,7 @@ const loginUser = asyncHandler(async (req, res) => {
 })
 
 const updateUser = asyncHandler(async (req, res) => {
-  const { fullName, username, bio } = req.body
+  const { fullName, username, eamil, bio } = req.body
   const user = await User.findOne({ _id: req.user.id })
   if (!user) {
     res.status(STATUSCODE.NOT_FOUND)
@@ -83,4 +85,21 @@ const deleteUser = asyncHandler(async (req, res) => {
   return res.status(STATUSCODE.OK).json(user)
 })
 
-module.exports = { registerUser, loginUser, updateUser, deleteUser }
+const searchUser = asyncHandler(async (req, res) => {
+  const { query } = req.query // Assuming the search term is passed as a query parameter
+  console.log(query)
+  if (!query) {
+    return res.status(400).json({ message: 'Search query is required' })
+  }
+
+  // Search for users by username or email (case insensitive)
+  const users = await User.find({
+    $or: [
+      { username: { $regex: query, $options: 'i' } },
+      { email: { $regex: query, $options: 'i' } }
+    ]
+  })
+
+  res.status(200).json(users)
+})
+module.exports = { registerUser, loginUser, updateUser, deleteUser, searchUser }

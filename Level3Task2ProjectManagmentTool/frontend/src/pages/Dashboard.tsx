@@ -11,8 +11,12 @@ import TaskListCard from '../components/taskListCard'
 import { chartConfig } from '../../constants'
 import { chartData } from '../../constants'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import useAuth from '@/store'
 
 function Dashboard () {
+  const { user, token } = useAuth()
+  console.log(user)
+  console.log(token)
   const date = new Date()
   console.log(date)
   const selected = [

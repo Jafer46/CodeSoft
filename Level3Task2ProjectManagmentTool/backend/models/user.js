@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const UserSchema = mongoose.schema(
+const UserSchema = mongoose.Schema(
   {
     fullName: {
       type: String

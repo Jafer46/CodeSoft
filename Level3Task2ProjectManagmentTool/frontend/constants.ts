@@ -3,8 +3,14 @@ import projectIcon from './src/assets/project.png'
 import taskIcon from './src/assets/task.png'
 import calendarIcon from './src/assets/calendar.png'
 import createIcon from './src/assets/create.png'
+import settingsIcon from './src/assets/setting.png'
 import { type ChartConfig } from "@/components/ui/chart"
-import { PhilippinePeso } from 'lucide-react'
+import user1 from './src/assets/user1.jpg'
+import user2 from './src/assets/user2.jfif'
+import user3 from './src/assets/user3.jpg'
+import user4 from './src/assets/user4.jpg'
+import user5 from './src/assets/uesr5.jpg'
+
 
 export const tasks = [
   {
@@ -39,6 +45,7 @@ export const routes = [
   { path: '/tasks', name: 'My Task', image: taskIcon },
   { path: '/create', name: 'Create', image: createIcon },
   { path: '/calendar', name: 'Calendar', image: calendarIcon },
+  { path: '/settings', name: 'Settings', image: settingsIcon },
 ]
 
 export const chartData = [
@@ -72,4 +79,29 @@ export enum FormFieldType {
     DATE_PICKER = 'datePicker',
     SELECT = 'select',
     SKELETON = 'skeleton',
+    PASSWORD = 'password'
 }
+
+
+export const usersData = [
+  {
+    username: 'hi',
+    avatar: user1,
+  },
+  {
+    username: 'w0w',
+    avatar: user2,
+  },
+  {
+    username: 'viv',
+    avatar: user3,
+  },
+  {
+    username: 'window',
+    avatar: user4,
+  },
+  {
+    username: 'amanda',
+    avatar: user5,
+  },
+]

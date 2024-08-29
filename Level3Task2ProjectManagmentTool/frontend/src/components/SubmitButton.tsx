@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from './ui/button'
+import loadingIcon from '../assets/loading.png'
 
 interface ButtonProps {
   isLoading: boolean
@@ -16,7 +17,7 @@ const SubmitButton = ({ isLoading, className, children }: ButtonProps) => {
       {isLoading ? (
         <div className='flex items-center gap-4'>
           <img
-            src='/assets/icons/loader.svg'
+            src={loadingIcon}
             height={24}
             width={24}
             alt='loader'

@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 const authenticate = (req, res, next) => {
   let token
   let authHeader = req.headers.Authorization || req.headers.authorization
@@ -6,7 +8,6 @@ const authenticate = (req, res, next) => {
     throw new Error('There is no header!')
   }
   token = authHeader.split(' ')[1]
-
   if (!token) {
     res.status(401)
     throw new Error('There is no token!')

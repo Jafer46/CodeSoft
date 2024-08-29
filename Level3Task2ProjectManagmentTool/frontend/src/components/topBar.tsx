@@ -1,14 +1,29 @@
+import useAuth from '@/store'
 import notificationIcon from '../assets/notification.png'
-export default function TopBar () {
+import AvatarCircle from './avatarCircle'
+import { useEffect } from 'react'
+import menuIcon from '../assets/menu.png'
+export default function TopBar ({ setExpanded }: any) {
+  const { user } = useAuth()
+
+  useEffect(() => {}, [user])
   return (
-    <div className='w-full flex rounded-xl gap-2 blur blur-high p-2'>
+    <div className='w-full flex rounded-xl gap-2 blur blur-high p-2 items-center'>
+      <img
+        src={menuIcon}
+        height='32px'
+        width='32px'
+        alt='menu'
+        onClick={() => setExpanded(prev => !prev)}
+        className='hover:bg-slate-400 rounded-md cursor-pointer transition'
+      />
       <input type='text' className='flex-grow blur blur-high' />
       <img
         src={notificationIcon}
         alt='notification'
-        className='w-[24px] h-[24px] ml-auto'
+        className='w-[20px] h-[20px] ml-auto'
       />
-      <img className='w-[24px] h-[24px] rounded-[50%]' />
+      <AvatarCircle url={user.avatar} />
     </div>
   )
 }
