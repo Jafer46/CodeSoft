@@ -11,7 +11,15 @@ router.get(
   asyncHandler(async (req, res) => {
     const message = req.flash('message')
     const user = req.session.user ?? null
-    res.render('index.ejs', { title: 'Home', user: user, message })
+    const blogs = await Blog.find({}).sort({ createdAt: -1 }).limit(20)
+    const sliderItems = await Blog.find({}).sort({ view: 1 }).limit(5)
+    res.render('index.ejs', {
+      title: 'Home',
+      user: user,
+      message,
+      blogs,
+      sliderItems
+    })
   })
 )
 
@@ -30,7 +38,9 @@ router.get(
     blog.view++
     await blog.save()
     const user = req.session.user ?? null
-    const comments = await Comment.find({ blogId: blog.id })
+    const comments = await Comment.find({ blogId: blog.id }).sort({
+      createdAt: -1
+    })
     return res.render('blog.ejs', {
       title: 'blog',
       user: user,
@@ -117,17 +127,27 @@ router.post(
     const message = req.flash('message')
     const user = req.session.user ?? null
     console.log('rendered')
-    if (!req.body) {
+
+    if (!req.body || !req.body.query) {
       return res.render('search', { title: 'search', user: user, blogs: null })
     }
+
     const query = req.body.query
-    const blogs = await Blog.find()
-    return res.render('search', {
-      title: 'search',
-      user: user,
-      blogs: blogs,
-      message
-    })
+
+    try {
+      const blogs = await Blog.find({ title: { $regex: query, $options: 'i' } }) // Example filtering by title
+      return res.render('search', {
+        title: 'search',
+        user: user,
+        blogs: blogs,
+        message
+      })
+    } catch (error) {
+      console.error(error)
+      return res
+        .status(500)
+        .render('error', { title: 'Error', message: 'Internal Server Error' })
+    }
   })
 )
 

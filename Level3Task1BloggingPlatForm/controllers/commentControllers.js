@@ -14,6 +14,7 @@ const getComments = asyncHandler(async (req, res) => {
 })
 
 const getComment = asyncHandler(async (req, res) => {})
+
 const createComment = asyncHandler(async (req, res) => {
   const { content, blogId } = req.body
   if (!content) {
@@ -29,6 +30,7 @@ const createComment = asyncHandler(async (req, res) => {
     commenterName: user.username,
     commenterAvatar: user.avatar
   })
+  console.log(commentCreated)
   return res.redirect(`/blog/${blogId}`)
 })
 

@@ -26,8 +26,8 @@
   </div>
   <div class="comment-section">
     <form action="/api/comment/create" class="comment-form" method="post">
-      <input type="text" hidden value="<%=blog._id%>" />
-      <input type="text" required placeholder="enter comment" />
+      <input type="text" hidden value="<%=blog._id%>" name="blogId" />
+      <input type="text" required placeholder="enter comment" name="content" />
       <button type="submit">comment</button>
     </form>
     <div class="comment-box">
