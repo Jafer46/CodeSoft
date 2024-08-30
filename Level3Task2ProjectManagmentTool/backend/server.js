@@ -1,6 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
-const dbconnection = require('./Config/dbConnection')
+const dbconnection = require('./config/dbConnection')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const errorHandler = require('./middlewares/errorHandling')
