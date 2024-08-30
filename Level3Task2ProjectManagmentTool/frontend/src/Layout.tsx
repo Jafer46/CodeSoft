@@ -3,6 +3,7 @@ import Sidebar from './components/sidebar'
 import { Outlet } from 'react-router-dom'
 import TopBar from './components/topBar'
 import { Toaster } from './components/ui/toaster'
+import { ScrollArea } from './components/ui/scroll-area'
 
 export default function Layout () {
   const [expanded, setExpanded] = useState(true)
@@ -11,9 +12,9 @@ export default function Layout () {
       <Sidebar expanded={expanded} setExpanded={setExpanded} />
       <div className='w-full flex flex-col gap-2'>
         <TopBar setExpanded={setExpanded} />
-        <main>
+        <ScrollArea>
           <Outlet />
-        </main>
+        </ScrollArea>
       </div>
       <Toaster />
     </div>

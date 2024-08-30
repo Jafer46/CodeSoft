@@ -127,6 +127,14 @@ body {
   border-color: red;
   color: red;
 }
+.priority-medium {
+  border-color: yellow;
+  color: yellow;
+}
+.priority-low {
+  border-color: green;
+  color: green;
+}
 
 .filter-gold {
   filter: brightness(0) saturate(100%) invert(76%) sepia(77%) saturate(2984%)

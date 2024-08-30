@@ -44,7 +44,6 @@ export const routes = [
   { path: '/projects', name: 'Projects', image: projectIcon },
   { path: '/tasks', name: 'My Task', image: taskIcon },
   { path: '/create', name: 'Create', image: createIcon },
-  { path: '/calendar', name: 'Calendar', image: calendarIcon },
   { path: '/settings', name: 'Settings', image: settingsIcon },
 ]
 

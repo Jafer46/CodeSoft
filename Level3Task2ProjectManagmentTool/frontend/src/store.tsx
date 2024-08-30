@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface userStore {
   user: any
-  token: String
+  token: string
   login: (userData: any, token: String) => void
   logout: () => void
 }

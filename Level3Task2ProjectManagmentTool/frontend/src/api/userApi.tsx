@@ -45,3 +45,12 @@ export const updateUser = (userData: User) =>
     .catch(err => {
       throw err
     })
+export const getDashboard = (token: string) =>
+  axios
+    .get(`${conString}/user/dashboerd`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => res.data)
+    .catch(err => {
+      throw err
+    })

@@ -11,3 +11,13 @@ export const createProject = (data: any, token: string) => {
       throw err
     })
 }
+
+export const getUserProjects = (token: string) =>
+  axios
+    .get(`${baseURL}/project/user`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => res.data)
+    .catch(err => {
+      throw err
+    })

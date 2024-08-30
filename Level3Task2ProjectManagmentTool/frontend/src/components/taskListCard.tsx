@@ -1,12 +1,8 @@
-import { tasks } from '../../constants'
-interface Task {
-  completed: Boolean
-  title: String
-}
+import { Task } from '@/schema'
 
-export default function TaskListCard () {
+export default function TaskListCard ({ tasks }: { tasks: Task[] }) {
   return (
-    <div className='h-auto w-[300px] blur blur-low rounded-2xl p-4 flex flex-col gap-1'>
+    <div className='h-auto w-auto blur blur-low rounded-2xl p-4 flex flex-col gap-1'>
       <div className='flex'>
         <p className='font-semibold text-lg'>My Tasks</p>
         <p className='text-slate-400'>(05)</p>

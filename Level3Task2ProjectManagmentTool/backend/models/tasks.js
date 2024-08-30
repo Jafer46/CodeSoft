@@ -20,11 +20,13 @@ const taskSchema = mongoose.Schema(
       type: [mongoose.Types.ObjectId],
       ref: 'User'
     },
-    status: {
-      type: Number
+    completed: {
+      type: Boolean
     }
   },
   {
     timestamps: true
   }
 )
+
+module.exports = mongoose.model('Task', taskSchema)

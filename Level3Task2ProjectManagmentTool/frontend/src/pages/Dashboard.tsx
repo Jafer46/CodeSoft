@@ -12,6 +12,9 @@ import { chartConfig } from '../../constants'
 import { chartData } from '../../constants'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import useAuth from '@/store'
+import { Calendar } from '@/components/ui/calendar'
+import { useQuery } from '@tanstack/react-query'
+import { getDashboard } from '@/api/userApi'
 
 function Dashboard () {
   const { user, token } = useAuth()
@@ -25,18 +28,26 @@ function Dashboard () {
     new Date(date.setDate(date.getDate() - 2)),
     new Date(date.setDate(date.getDate() - 6))
   ]
+  const { data, error } = useQuery<any, Error>({
+    queryKey: ['data'],
+    queryFn: () => getDashboard(token)
+  })
+
+  console.log(data.deadlineList)
+  console.log(date)
   return (
-    <>
-      <ProjectCard />
-      {/* <Calendar
+    <div className='grid grid-cols-1 gap-4 md:grid-cols-2 md:grid-row-3 lg:grid-cols-3 lg:grid-rows-2'>
+      <ProjectCard project={data.projects[0]} />
+      <TaskListCard tasks={data.myTasks} />
+      <Calendar
         mode='multiple'
-        selected={selected}
+        selected={data.deadlineList}
         className='blur blur-low rounded-2xl'
-      /> */}
-      <TaskListCard />
+      />
+      <ProjectCard project={data.projects[1]} />
       <ChartContainer
         config={chartConfig}
-        className='h-[200px] w-[200px] blur blur-low rounded-xl'
+        className='h-[320px] w-full blur blur-low rounded-xl md:col-span-2'
       >
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
@@ -53,7 +64,7 @@ function Dashboard () {
           <Bar dataKey='mobile' fill='var(--color-mobile)' radius={4} />
         </BarChart>
       </ChartContainer>
-    </>
+    </div>
   )
 }
 

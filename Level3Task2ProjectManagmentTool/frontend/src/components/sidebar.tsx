@@ -16,7 +16,7 @@ export default function Sidebar ({ expanded, setExpanded }: any) {
   return (
     <section
       className={classnames(
-        'transition-all duration-300 ease-in-out rounded-lg ',
+        'transition-all duration-300 ease-in-out rounded-lg fixed',
         {
           'blur blur-low md:w-[226px] h-full opacity-100': expanded,
           'h-0 opacity-0 md:opacity-100 md:h-full md:w-[44px] overflow-hidden':

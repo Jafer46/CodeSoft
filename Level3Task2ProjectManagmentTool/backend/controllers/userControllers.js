@@ -3,6 +3,8 @@ const User = require('../models/user')
 const { STATUSCODE } = require('../constants/statuscode')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Project = require('../models/project')
+const Task = require('../models/tasks')
 
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, username, email, password } = req.body
@@ -102,4 +104,77 @@ const searchUser = asyncHandler(async (req, res) => {
 
   res.status(200).json(users)
 })
-module.exports = { registerUser, loginUser, updateUser, deleteUser, searchUser }
+
+const getDashboard = asyncHandler(async (req, res) => {
+  const userId = req.user.id
+
+  // Fetch projects where the user is either the creator or in the userList
+  const proj = await Project.find({
+    $or: [{ creatorId: userId }, { userList: userId }]
+  })
+    .limit(2)
+    .populate('creatorId userList')
+
+  // Map through proj to add task counts
+  const projects = await Promise.all(
+    proj.map(async project => {
+      const numberOfTasks = await Task.countDocuments({ partOf: project._id })
+      const finishedTasks = await Task.countDocuments({
+        partOf: project._id,
+        completed: true
+      })
+
+      return {
+        ...project._doc, // Include existing project fields
+        numberOfTasks, // Total task count
+        finishedTasks // Count of completed tasks
+      }
+    })
+  )
+
+  // Fetch tasks assigned to the user
+  const myTasks = await Task.find({ assignedUsers: userId })
+
+  // Fetch all project deadlines
+  const deadlines = await Project.find({ userList: userId })
+    .select('deadline')
+    .exec()
+  const deadlineList = deadlines.map(project => project.deadline)
+
+  const tasks = await Task.aggregate([
+    {
+      $match: {
+        assignedUsers: userId
+      }
+    },
+    {
+      $group: {
+        _id: {
+          year: { $year: '$createdAt' },
+          month: { $month: '$createdAt' }
+        },
+        completedCount: {
+          $sum: { $cond: ['$completed', 1, 0] } // Count of completed tasks
+        },
+        uncompletedCount: {
+          $sum: { $cond: ['$completed', 0, 1] } // Count of uncompleted tasks
+        }
+      }
+    },
+    {
+      $sort: { '_id.year': 1, '_id.month': 1 } // Sort by year and month
+    }
+  ])
+  // Return response with projects and my tasks
+  return res
+    .status(STATUSCODE.OK)
+    .json({ projects, myTasks, deadlineList, tasks })
+})
+module.exports = {
+  registerUser,
+  loginUser,
+  updateUser,
+  deleteUser,
+  searchUser,
+  getDashboard
+}

@@ -14,8 +14,18 @@ export interface Task {
   partOf: string
   createdBy: string
   assignedUsers: string[]
-  status: number
+  completed?: boolean
   _id: string
+}
+
+export interface Project {
+  creatorId: User
+  priority: String
+  deadline: Date
+  status: Number
+  userList: User[]
+  numberOfTasks: Number
+  finishedTasks: Number
 }
 
 export const userSchema = z.object({

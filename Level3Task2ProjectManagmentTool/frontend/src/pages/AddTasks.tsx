@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/table'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Task } from '../schema'
+import { Task, User } from '../schema'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -22,53 +22,67 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { Variable } from 'lucide-react'
-import { createTask } from '@/api/taskApi'
+import { createTask, getPorjectTasks } from '@/api/taskApi'
 import { useToast } from '@/components/ui/use-toast'
 import useAuth from '@/store'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import UserList from '@/components/userList'
 
 export default function AddTasks () {
   const [expanded, setExpanded] = useState(false)
-  const [tasks, setTasks] = useState<any[]>([])
-  const [assignUsers, setAssignedUsers] = useState([])
+  const [assignedUsers, setAssignedUsers] = useState<string[]>([])
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const { state } = useLocation()
   const { toast } = useToast()
-  const { token } = useAuth()
+  const { user, token } = useAuth()
   const { project, users } = state
+  const queryClient = useQueryClient()
 
   const close = () => {
     setExpanded(false)
     setTitle('')
     setDescription('')
   }
-  const create = async () => {
-    if (!title || !description) {
-      return
-    }
-    try {
-      const task = await createTask(
-        {
-          title,
-          description,
-          assignUsers,
-          partOf: project._id
-        },
-        token
-      )
-      if (task._id) {
-        setTasks((prevtask: any[]) => [...prevtask, task])
-      }
-    } catch (err) {
+  const create = () => {
+    if (
+      !title ||
+      !description ||
+      !assignedUsers ||
+      assignedUsers.length === 0
+    ) {
       toast({
         variant: 'destructive',
-        title: 'Error',
-        description: 'Something went wrong'
+        title: 'Invalid field',
+        description: 'Mandatory field is not completed'
       })
+      return
     }
+    createTasks.mutate({
+      title,
+      description,
+      partOf: project._id,
+      createdBy: '',
+      assignedUsers,
+      _id: ''
+    })
+    close()
   }
-  useEffect(() => {}, [])
+  const createTasks = useMutation({
+    mutationFn: (task: Task) => createTask(task, token),
+    onSuccess: (savedTask, task) => {
+      queryClient.setQueryData(['Tasks'], tasks => [
+        ...(tasks || []),
+        savedTask
+      ])
+    }
+  })
+
+  const { data: tasks, error } = useQuery<Task[], Error>({
+    queryKey: ['Tasks'],
+    queryFn: () => getPorjectTasks(project._id, token)
+  })
+
   return (
     <div className='w-full blur blur-high rounded-lg p-4 '>
       <div className='text-xl font-semibold mb-2'>Table of Tasks</div>
@@ -81,6 +95,7 @@ export default function AddTasks () {
             <TableHead className='max-w-[50px]'>Title</TableHead>
             <TableHead className='max-w-[50px]'>Description</TableHead>
             <TableHead className='max-w-[50px]'>Status</TableHead>
+            <TableHead className='max-w-[50px]'>Assigned Uses</TableHead>
             <TableHead className='max-w-[50px]'>Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -93,7 +108,14 @@ export default function AddTasks () {
                   {task.description}
                 </TableCell>
                 <TableCell className='max-w-[50px]'>
-                  {task.status === 0 ? 'Pending' : 'Completed'}
+                  {task.completed ? 'Completed' : 'Pending'}
+                </TableCell>
+                <TableCell>
+                  <UserList
+                    users={users.filter((user: User) =>
+                      assignedUsers.includes(user._id)
+                    )}
+                  />
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -117,7 +139,7 @@ export default function AddTasks () {
                 />
               </TableCell>
               <TableCell>
-                <Select>
+                <Select onValueChange={value => setAssignedUsers(value)}>
                   <SelectTrigger className='w-full'>
                     <SelectValue placeholder='select users' />
                   </SelectTrigger>
@@ -146,7 +168,7 @@ export default function AddTasks () {
           </TableFooter>
         )}
       </Table>
-      {!expanded && (
+      {!expanded && user._id === project.creatorId && (
         <div className='flex justify-center'>
           <button
             className='text-xl font-semibold bg-white h-[34px] w-[34px] rounded-full border border-gray-300'
