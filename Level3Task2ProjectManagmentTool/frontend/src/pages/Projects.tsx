@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 export default function Projects () {
   const { token } = useAuth()
 
-  const { data: projects, error } = useQuery<Project[], Error>({
+  const { data: projects } = useQuery<Project[], Error>({
     queryKey: ['Projects'],
     queryFn: () => getUserProjects(token)
   })

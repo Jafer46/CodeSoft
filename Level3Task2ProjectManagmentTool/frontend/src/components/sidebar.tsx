@@ -3,7 +3,6 @@ import { routes } from '../../constants'
 import logoutImg from '../assets/logout.png'
 import mainIcon from '../assets/mainicon.png'
 import classnames from 'classnames'
-import { useState } from 'react'
 import useAuth from '@/store'
 
 export default function Sidebar ({ expanded, setExpanded }: any) {

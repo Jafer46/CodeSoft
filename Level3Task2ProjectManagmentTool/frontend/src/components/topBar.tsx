@@ -14,7 +14,7 @@ export default function TopBar ({ setExpanded }: any) {
         height='32px'
         width='32px'
         alt='menu'
-        onClick={() => setExpanded(prev => !prev)}
+        onClick={() => setExpanded((prev: boolean) => !prev)}
         className='hover:bg-slate-400 rounded-md cursor-pointer transition'
       />
       <img

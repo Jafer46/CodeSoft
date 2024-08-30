@@ -46,11 +46,11 @@ export default function SignUp () {
       setLoading(false)
       login(user, accessToken)
       navigate('/')
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false)
       toast({
         variant: 'destructive',
-        title: err.message,
+        title: err.message ?? 'unexpected error',
         description: 'Something went wrong!'
       })
     }

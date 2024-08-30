@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+export interface error {
+  message: string
+}
 export interface User {
   fullName?: string
   username: string
@@ -20,12 +23,12 @@ export interface Task {
 
 export interface Project {
   creatorId: User
-  priority: String
+  priority: string
   deadline: Date
-  status: Number
+  status: number
   userList: User[]
-  numberOfTasks: Number
-  finishedTasks: Number
+  numberOfTasks: number
+  finishedTasks: number
 }
 
 export const userSchema = z.object({

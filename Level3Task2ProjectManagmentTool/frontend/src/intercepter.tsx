@@ -1,6 +1,6 @@
-import axios from 'axios'
-import useAuth from './store'
-import { useEffect } from 'react'
+// import axios from 'axios'
+// import useAuth from './store'
+// import { useEffect } from 'react'
 
 // const useAxiosInstance = () => {
 //   const { token } = useAuth() // Call the hook to get the token

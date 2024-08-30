@@ -13,7 +13,6 @@ import CustomFormField from '@/components/CustomFormField'
 export default function Settings () {
   const { user } = useAuth()
   const { toast } = useToast()
-  const [avatar, setAvatar] = useState<string>('')
   const [loading, setLoading] = useState(false)
   console.log(user)
 
@@ -27,7 +26,7 @@ export default function Settings () {
     }
   })
 
-  const onSubmit = async (values: z.infer<typeof userSchema>) => {
+  const onSubmit = async () => {
     setLoading(true)
     try {
     } catch (err) {

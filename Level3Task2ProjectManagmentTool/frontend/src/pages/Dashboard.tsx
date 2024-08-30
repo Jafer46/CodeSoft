@@ -17,9 +17,9 @@ import { useQuery } from '@tanstack/react-query'
 import { getDashboard } from '@/api/userApi'
 
 function Dashboard () {
-  const { user, token } = useAuth()
+  const { token } = useAuth()
 
-  const { data, error } = useQuery<any, Error>({
+  const { data } = useQuery<any, Error>({
     queryKey: ['data'],
     queryFn: () => getDashboard(token)
   })

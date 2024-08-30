@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -48,8 +47,6 @@ interface CustomProps {
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const { fieldType, iconSrc, iconAlt, placeHolder } = props
   const [showPassword, setShowPassword] = React.useState(false)
-  const disabled =
-    props.value === '' || props.value === undefined || props.disabled
 
   switch (fieldType) {
     case FormFieldType.INPUT:

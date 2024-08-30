@@ -3,7 +3,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow
@@ -18,13 +17,13 @@ export default function Tasks () {
   const { token } = useAuth()
   const queryClient = useQueryClient()
 
-  const { data: tasks, error } = useQuery<Task[], Error>({
+  const { data: tasks } = useQuery<Task[], Error>({
     queryKey: ['Tasks'],
     queryFn: () => getUserTasks(token)
   })
   const taskMutation = useMutation({
     mutationFn: (task: Task) => updateTask(task, token),
-    onSuccess: (savedTask, task) => {
+    onSuccess: savedTask => {
       queryClient.setQueryData(['Tasks'], (oldTasks: Task[]) => {
         // Find the index of the task to update
         const index = oldTasks.findIndex(t => t._id === savedTask._id)

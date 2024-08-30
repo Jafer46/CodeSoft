@@ -40,7 +40,7 @@ export default function UserSelection ({
       const users = await search(value)
       console.log(users)
       setUsers(users)
-    } catch (err) {
+    } catch (err: any) {
       toast({
         title: 'error',
         description: err.message
@@ -80,7 +80,7 @@ export default function UserSelection ({
             <CommandInput
               placeholder='Search user...'
               className='h-9'
-              onChangeCapture={e => searchUser(e.target.value)}
+              onChangeCapture={(e: any) => searchUser(e.target.value)}
             />
             <CommandList>
               <CommandEmpty>No user found.</CommandEmpty>
@@ -91,11 +91,12 @@ export default function UserSelection ({
                       key={user._id}
                       value={user.username}
                       onSelect={() => {
-                        setSelectedUsers(prev => {
+                        setSelectedUsers((prev: User[]) => {
                           // Check if the user is already selected
                           if (
                             prev.find(
-                              selectedUser => selectedUser._id === user._id
+                              (selectedUser: User) =>
+                                selectedUser._id === user._id
                             )
                           ) {
                             return prev // Return the previous state if the user is already selected
@@ -139,8 +140,8 @@ export default function UserSelection ({
                   <Button
                     variant='destructive'
                     onClick={() => {
-                      setSelectedUsers(prev =>
-                        prev.filter(u => u._id !== user._id)
+                      setSelectedUsers((prev: User[]) =>
+                        prev.filter((u: User) => u._id !== user._id)
                       )
                       togglePopover(user._id) // Close popover after removing
                     }}

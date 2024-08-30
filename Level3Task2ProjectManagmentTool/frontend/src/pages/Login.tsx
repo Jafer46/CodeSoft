@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { loginUser } from '../api/userApi'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
 
 const fromSchema = z.object({
   email: z.string().email('invalid email address'),
@@ -36,11 +37,11 @@ export default function Login () {
       setLoading(false)
       login(user, accessToken)
       navigate('/')
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false)
       toast({
         variant: 'destructive',
-        title: err.message,
+        title: err.message ?? 'unexpected error',
         description: 'Something went wrong!'
       })
     }

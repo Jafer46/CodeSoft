@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Task, User } from '../schema'
 import { Input } from '@/components/ui/input'
@@ -73,14 +73,14 @@ export default function AddTasks () {
     })
     close()
   }
-  const taskDelete = (taskId: string, token: string) => {
+  const taskDelete = (taskId: string) => {
     deleteTasks.mutate(taskId)
   }
 
   const createTasks = useMutation({
     mutationFn: (task: Task) => createTask(task, token),
-    onSuccess: (savedTask, task) => {
-      queryClient.setQueryData(['Tasks'], tasks => [
+    onSuccess: savedTask => {
+      queryClient.setQueryData(['Tasks'], (tasks: Task[]) => [
         ...(tasks || []),
         savedTask
       ])
@@ -89,20 +89,20 @@ export default function AddTasks () {
 
   const deleteTasks = useMutation({
     mutationFn: (taskId: string) => deleteTask(taskId, token),
-    onSuccess: (deletedTask: Task, task) => {
+    onSuccess: (deletedTask: Task) => {
       queryClient.setQueryData(['Tasks'], (tasks: Task[]) =>
         tasks.filter(task => task._id !== deletedTask._id)
       )
     }
   })
 
-  const { data: tasks, error } = useQuery<Task[], Error>({
+  const { data: tasks } = useQuery<Task[], Error>({
     queryKey: ['Tasks'],
     queryFn: () => getPorjectTasks(project._id, token)
   })
   const taskMutation = useMutation({
     mutationFn: (task: Task) => updateTask(task, token),
-    onSuccess: (savedTask: Task, task) => {
+    onSuccess: (savedTask: Task) => {
       queryClient.setQueryData(['Tasks'], (oldTasks: Task[]) => {
         // Find the index of the task to update
         const index = oldTasks.findIndex(t => t._id === savedTask._id)
@@ -186,7 +186,11 @@ export default function AddTasks () {
                 />
               </TableCell>
               <TableCell>
-                <Select onValueChange={value => setAssignedUsers(value)}>
+                <Select
+                  onValueChange={value =>
+                    setAssignedUsers(values => [...(values || []), value])
+                  }
+                >
                   <SelectTrigger className='w-full'>
                     <SelectValue placeholder='select users' />
                   </SelectTrigger>

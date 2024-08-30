@@ -1,6 +1,6 @@
 import { createProject } from '@/api/projectApi'
 import SubmitButton from '@/components/SubmitButton'
-import { User, projectSchema } from '@/schema'
+import { projectSchema } from '@/schema'
 import useAuth from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormFieldType } from '../../constants'
@@ -40,17 +40,17 @@ export const Create = () => {
       })
       return
     }
-    console.log('hello')
+    setLoading(true)
     let userList: string[] = []
     selectedUsers.forEach(user => {
       userList.push(user._id)
     })
     try {
       const data = await createProject({ ...values, userList }, token)
-      console.log(data)
+      setLoading(false)
       navigate('/add', { state: { project: data, users: selectedUsers } })
     } catch (err) {
-      console.log(err)
+      setLoading(false)
     }
   }
   return (

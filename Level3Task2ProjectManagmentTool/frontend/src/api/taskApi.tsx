@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { baseURL } from '@/intercepter'
 import { Task } from '@/schema'
-import { error } from 'console'
 export const createTask = (data: any, token: String) =>
   axios
     .post(`${baseURL}/task`, data, {

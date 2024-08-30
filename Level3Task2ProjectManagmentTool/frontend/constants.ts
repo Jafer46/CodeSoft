@@ -1,7 +1,6 @@
 import dashbordIcon from './src/assets/dashboard.png'
 import projectIcon from './src/assets/project.png'
 import taskIcon from './src/assets/task.png'
-import calendarIcon from './src/assets/calendar.png'
 import createIcon from './src/assets/create.png'
 import settingsIcon from './src/assets/setting.png'
 import { type ChartConfig } from "@/components/ui/chart"

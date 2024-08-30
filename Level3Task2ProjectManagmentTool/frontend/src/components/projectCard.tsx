@@ -1,5 +1,4 @@
 import { Progress } from '@/components/ui/progress'
-import userIcon from '../assets/user.png'
 import AvatarCircle from './avatarCircle'
 import UserList from './userList'
 import { Project } from '@/schema'
