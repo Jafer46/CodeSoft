@@ -61,14 +61,7 @@ const createUser = asyncHandler(async (req, res) => {
   req.session.isAuth = true
   req.session.save()
   res.cookie('sessionId', req.sessionID)
-  return res.status(STATUS.CREATED).render('index.ejs', {
-    title: 'Home',
-    user: newUser,
-    message: {
-      message: 'acount created!',
-      type: MESSAGETYPE.SUCCESS
-    }
-  })
+  return res.status(STATUS.CREATED).redirect('/home')
 })
 
 const updateUser = asyncHandler(async (req, res) => {

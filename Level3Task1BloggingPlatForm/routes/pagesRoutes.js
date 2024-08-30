@@ -12,6 +12,7 @@ router.get(
     const message = req.flash('message')
     const user = req.session.user ?? null
     const blogs = await Blog.find({}).sort({ createdAt: -1 }).limit(20)
+    console.log(blogs)
     const sliderItems = await Blog.find({}).sort({ view: 1 }).limit(5)
     res.render('index.ejs', {
       title: 'Home',
