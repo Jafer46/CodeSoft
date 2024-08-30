@@ -1,6 +1,6 @@
 import { Task } from '@/schema'
 
-export default function TaskListCard ({ tasks }: { tasks: Task[] }) {
+export default function TaskListCard ({ tasks }: { tasks?: Task[] }) {
   return (
     <div className='h-auto w-auto blur blur-low rounded-2xl p-4 flex flex-col gap-1'>
       <div className='flex'>
@@ -8,14 +8,14 @@ export default function TaskListCard ({ tasks }: { tasks: Task[] }) {
         <p className='text-slate-400'>(05)</p>
       </div>
 
-      {tasks.map((task, index) => (
+      {tasks?.map((task, index) => (
         <>
           <div key={index} className='flex items-center gap-2 border-b-2'>
             <p>0{index}</p>
             <p>{task.title}</p>
             <div
-              className={`ml-auto h-[22px] w-[22px] rounded-[50%] bg-${
-                task.completed ? 'green-500' : 'inherit'
+              className={`ml-auto h-[22px] w-[22px] rounded-[50%] ${
+                task.completed ? 'bg-green-500' : 'bg-inherit'
               }`}
             >
               {task.completed ? (

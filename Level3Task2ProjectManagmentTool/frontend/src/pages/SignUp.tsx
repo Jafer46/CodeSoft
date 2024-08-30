@@ -9,6 +9,8 @@ import { useState } from 'react'
 import { signup } from '@/api/userApi'
 import { useToast } from '@/components/ui/use-toast'
 import useAuth from '@/store'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -22,6 +24,7 @@ export default function SignUp () {
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
   const { login } = useAuth()
+  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,6 +45,7 @@ export default function SignUp () {
       const { user, accessToken } = await signup({ username, email, password })
       setLoading(false)
       login(user, accessToken)
+      navigate('/')
     } catch (err) {
       setLoading(false)
       console.log('error')
@@ -93,6 +97,11 @@ export default function SignUp () {
             <SubmitButton isLoading={loading}>Login</SubmitButton>
           </form>
         </Form>
+        <div className='flex items-center justify-center'>
+          <Button variant='link' onClick={() => navigate('/login')}>
+            Login
+          </Button>
+        </div>
       </div>
     </div>
   )

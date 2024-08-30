@@ -15,7 +15,8 @@ const {
   createTask,
   getProjectTasks,
   getUserTasks,
-  updateTask
+  updateTask,
+  deleteTask
 } = require('../controllers/taskControllers')
 router.route('/login').post(loginUser)
 router.route('/register').post(registerUser)
@@ -30,4 +31,5 @@ router.post('/task', authenticate, createTask)
 router.get('/task/project/:id', authenticate, getProjectTasks)
 router.get('/user/task', authenticate, getUserTasks)
 router.put('/task/:id', authenticate, updateTask)
+router.delete('/task/:id', authenticate, deleteTask)
 module.exports = router

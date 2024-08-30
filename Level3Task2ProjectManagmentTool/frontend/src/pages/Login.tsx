@@ -9,6 +9,7 @@ import useAuth from '@/store'
 import { useState } from 'react'
 import { loginUser } from '../api/userApi'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 
 const fromSchema = z.object({
   email: z.string().email('invalid email address'),
@@ -49,10 +50,10 @@ export default function Login () {
             onSubmit={form.handleSubmit(onSubmit)}
             className='space-y-8 flex-1 mb-3'
           >
-            <section className='mb-12 space-y-4'>
-              <h1 className='mb-12 space-y-1'>Hi there 👋</h1>
+            <section className='mb-12 space-y-1'>
+              <h1 className='text-xl font-bold'>Hi there 👋</h1>
               <p className='text-dark-700'>
-                Add data to the following form to login
+                Add your data to the following form for login
               </p>
             </section>
             <CustomFormField
@@ -74,6 +75,11 @@ export default function Login () {
             <SubmitButton isLoading={loading}>Login</SubmitButton>
           </form>
         </Form>
+        <div className='flex items-center justify-center'>
+          <Button variant='link' onClick={() => navigate('/signup')}>
+            Sign up
+          </Button>
+        </div>
       </div>
     </div>
   )

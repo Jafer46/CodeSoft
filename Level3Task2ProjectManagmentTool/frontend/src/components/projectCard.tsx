@@ -4,8 +4,10 @@ import AvatarCircle from './avatarCircle'
 import UserList from './userList'
 import { Project } from '@/schema'
 import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProjectCard ({ project }: { project?: Project }) {
+  const navigate = useNavigate()
   if (!project) {
     return (
       <div className='w-auto blur blur-high rounded-2xl p-4 flex flex-col gap-2'>
@@ -37,7 +39,12 @@ export default function ProjectCard ({ project }: { project?: Project }) {
     status = 'Finished'
   }
   return (
-    <div className='w-auto blur blur-high rounded-2xl p-4 flex flex-col gap-4'>
+    <div
+      className='w-auto blur blur-high rounded-2xl p-4 flex flex-col gap-4'
+      onClick={() =>
+        navigate('/add', { state: { project, users: project.userList } })
+      }
+    >
       <div className='flex gap-2'>
         <AvatarCircle url={project.creatorId?.avatar} />
         <p className='font-semibold'>By:{project.creatorId.username}</p>

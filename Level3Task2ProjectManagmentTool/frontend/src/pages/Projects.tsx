@@ -14,7 +14,7 @@ export default function Projects () {
 
   console.log(projects)
   return (
-    <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
+    <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-3'>
       {projects?.map((project: Project) => (
         <ProjectCard project={project} />
       ))}

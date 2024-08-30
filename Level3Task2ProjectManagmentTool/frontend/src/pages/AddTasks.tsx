@@ -22,7 +22,12 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { createTask, getPorjectTasks } from '@/api/taskApi'
+import {
+  createTask,
+  deleteTask,
+  getPorjectTasks,
+  updateTask
+} from '@/api/taskApi'
 import { useToast } from '@/components/ui/use-toast'
 import useAuth from '@/store'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -68,6 +73,10 @@ export default function AddTasks () {
     })
     close()
   }
+  const taskDelete = (taskId: string, token: string) => {
+    deleteTasks.mutate(taskId)
+  }
+
   const createTasks = useMutation({
     mutationFn: (task: Task) => createTask(task, token),
     onSuccess: (savedTask, task) => {
@@ -78,11 +87,41 @@ export default function AddTasks () {
     }
   })
 
+  const deleteTasks = useMutation({
+    mutationFn: (taskId: string) => deleteTask(taskId, token),
+    onSuccess: (deletedTask: Task, task) => {
+      queryClient.setQueryData(['Tasks'], (tasks: Task[]) =>
+        tasks.filter(task => task._id !== deletedTask._id)
+      )
+    }
+  })
+
   const { data: tasks, error } = useQuery<Task[], Error>({
     queryKey: ['Tasks'],
     queryFn: () => getPorjectTasks(project._id, token)
   })
+  const taskMutation = useMutation({
+    mutationFn: (task: Task) => updateTask(task, token),
+    onSuccess: (savedTask: Task, task) => {
+      queryClient.setQueryData(['Tasks'], (oldTasks: Task[]) => {
+        // Find the index of the task to update
+        const index = oldTasks.findIndex(t => t._id === savedTask._id)
 
+        // If the task exists, update it; if not, return the old tasks
+        if (index > -1) {
+          const updatedTasks = [...oldTasks]
+          updatedTasks[index] = savedTask // Update the task
+          return updatedTasks
+        }
+
+        return oldTasks // Return the old tasks if not found
+      })
+    }
+  })
+  const update = (task: Task) => {
+    task.completed = true
+    taskMutation.mutate(task)
+  }
   return (
     <div className='w-full blur blur-high rounded-lg p-4 '>
       <div className='text-xl font-semibold mb-2'>Table of Tasks</div>
@@ -113,11 +152,19 @@ export default function AddTasks () {
                 <TableCell>
                   <UserList
                     users={users.filter((user: User) =>
-                      assignedUsers.includes(user._id)
+                      task.assignedUsers.includes(user._id)
                     )}
                   />
                 </TableCell>
-                <TableCell></TableCell>
+                <TableCell>
+                  {!task.completed && task.assignedUsers.includes(user._id) && (
+                    <Button onClick={() => update(task)}>Completed</Button>
+                  )}
+                  {(project.creatorId === user._id ||
+                    project.creatorId._id === user._id) && (
+                    <Button onClick={() => taskDelete(task._id)}>Delete</Button>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -168,16 +215,18 @@ export default function AddTasks () {
           </TableFooter>
         )}
       </Table>
-      {!expanded && user._id === project.creatorId && (
-        <div className='flex justify-center'>
-          <button
-            className='text-xl font-semibold bg-white h-[34px] w-[34px] rounded-full border border-gray-300'
-            onClick={() => setExpanded(!expanded)}
-          >
-            +
-          </button>
-        </div>
-      )}
+      {!expanded &&
+        (user._id === project.creatorId ||
+          user._id === project.creatorId._id) && (
+          <div className='flex justify-center'>
+            <button
+              className='text-xl font-semibold bg-white h-[34px] w-[34px] rounded-full border border-gray-300'
+              onClick={() => setExpanded(!expanded)}
+            >
+              +
+            </button>
+          </div>
+        )}
     </div>
   )
 }

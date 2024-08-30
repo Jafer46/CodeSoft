@@ -18,33 +18,21 @@ import { getDashboard } from '@/api/userApi'
 
 function Dashboard () {
   const { user, token } = useAuth()
-  console.log(user)
-  console.log(token)
-  const date = new Date()
-  console.log(date)
-  const selected = [
-    date,
-    new Date(date.setDate(date.getDate() - 3)),
-    new Date(date.setDate(date.getDate() - 2)),
-    new Date(date.setDate(date.getDate() - 6))
-  ]
+
   const { data, error } = useQuery<any, Error>({
     queryKey: ['data'],
     queryFn: () => getDashboard(token)
   })
-
-  console.log(data.deadlineList)
-  console.log(date)
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-2 md:grid-row-3 lg:grid-cols-3 lg:grid-rows-2'>
-      <ProjectCard project={data.projects[0]} />
-      <TaskListCard tasks={data.myTasks} />
+      <ProjectCard project={data?.projects[0]} />
+      <TaskListCard tasks={data?.myTasks} />
       <Calendar
         mode='multiple'
-        selected={data.deadlineList}
-        className='blur blur-low rounded-2xl'
+        selected={data?.deadlineList}
+        className='blur blur-low rounded-2xl flex justify-center'
       />
-      <ProjectCard project={data.projects[1]} />
+      <ProjectCard project={data?.projects[1]} />
       <ChartContainer
         config={chartConfig}
         className='h-[320px] w-full blur blur-low rounded-xl md:col-span-2'

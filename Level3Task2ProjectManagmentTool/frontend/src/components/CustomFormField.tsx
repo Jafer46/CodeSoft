@@ -109,10 +109,12 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       break
     case FormFieldType.SELECT:
       return (
-        <Select>
-          <SelectTrigger className='w-full'>
-            <SelectValue placeholder={placeHolder} />
-          </SelectTrigger>
+        <Select onValueChange={field.onChange} value={field.value}>
+          <FormControl>
+            <SelectTrigger className='w-full'>
+              <SelectValue placeholder={placeHolder} />
+            </SelectTrigger>
+          </FormControl>
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Priorities</SelectLabel>
@@ -129,8 +131,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         <div className='relative'>
           <FormControl>
             <Input
-              type='password'
+              type={showPassword ? 'text' : 'password'} // Change input type based on state
               className='hide-password-toggle pr-10'
+              placeholder='ex 1234.....'
               {...field}
             />
           </FormControl>
@@ -141,7 +144,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
             onClick={() => setShowPassword(prev => !prev)}
           >
-            {showPassword && !disabled ? (
+            {showPassword ? (
               <EyeIcon className='h-4 w-4' aria-hidden='true' />
             ) : (
               <EyeOffIcon className='h-4 w-4' aria-hidden='true' />
@@ -151,15 +154,15 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             </span>
           </Button>
 
-          {/* hides browsers password toggles */}
+          {/* Hides browser's password toggles */}
           <style>{`
-					.hide-password-toggle::-ms-reveal,
-					.hide-password-toggle::-ms-clear {
-						visibility: hidden;
-						pointer-events: none;
-						display: none;
-					}
-				`}</style>
+    .hide-password-toggle::-ms-reveal,
+    .hide-password-toggle::-ms-clear {
+      visibility: hidden;
+      pointer-events: none;
+      display: none;
+    }
+  `}</style>
         </div>
       )
       break

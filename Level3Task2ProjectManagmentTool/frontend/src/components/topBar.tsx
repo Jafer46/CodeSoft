@@ -17,7 +17,6 @@ export default function TopBar ({ setExpanded }: any) {
         onClick={() => setExpanded(prev => !prev)}
         className='hover:bg-slate-400 rounded-md cursor-pointer transition'
       />
-      <input type='text' className='flex-grow blur blur-high' />
       <img
         src={notificationIcon}
         alt='notification'

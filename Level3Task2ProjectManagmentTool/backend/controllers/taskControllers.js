@@ -43,6 +43,16 @@ const updateTask = asyncHandler(async (req, res) => {
   return res.status(STATUSCODE.OK).json(task)
 })
 
+const deleteTask = asyncHandler(async (req, res) => {
+  const task = await Task.findOne({ _id: req.params.id })
+  if (!task) {
+    res.status(STATUSCODE.NOT_FOUND)
+    throw new Error('Task is not found')
+  }
+  await Task.deleteOne({ _id: req.params.id })
+  return res.status(STATUSCODE.OK).json(task)
+})
+
 const getProjectTasks = asyncHandler(async (req, res) => {
   const projectId = req.params.id
   const tasks = await Task.find({ partOf: projectId })
@@ -54,4 +64,10 @@ const getUserTasks = asyncHandler(async (req, res) => {
   const tasks = await Task.find({ assignedUsers: userId })
   return res.status(200).json(tasks)
 })
-module.exports = { createTask, getProjectTasks, getUserTasks, updateTask }
+module.exports = {
+  createTask,
+  getProjectTasks,
+  getUserTasks,
+  updateTask,
+  deleteTask
+}

@@ -1,12 +1,15 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { routes } from '../../constants'
 import logoutImg from '../assets/logout.png'
 import mainIcon from '../assets/mainicon.png'
 import classnames from 'classnames'
 import { useState } from 'react'
+import useAuth from '@/store'
 
 export default function Sidebar ({ expanded, setExpanded }: any) {
   const location = useLocation()
+  const { logout } = useAuth()
+  const navigate = useNavigate()
 
   const handleExpanded = () => {
     if (window.innerWidth < 768) {
@@ -16,7 +19,7 @@ export default function Sidebar ({ expanded, setExpanded }: any) {
   return (
     <section
       className={classnames(
-        'transition-all duration-300 ease-in-out rounded-lg fixed',
+        'transition-all duration-300 ease-in-out rounded-lg',
         {
           'blur blur-low md:w-[226px] h-full opacity-100': expanded,
           'h-0 opacity-0 md:opacity-100 md:h-full md:w-[44px] overflow-hidden':
@@ -74,7 +77,13 @@ export default function Sidebar ({ expanded, setExpanded }: any) {
             </div>
           )
         })}
-        <div className='flex gap-2 mt-auto p-4'>
+        <div
+          className='flex gap-2 mt-auto p-4'
+          onClick={() => {
+            logout()
+            navigate('/login')
+          }}
+        >
           <img src={logoutImg} alt='logout' className='w-[24px] h-[24px]' />
           <p className='font-semibold'>Logout</p>
         </div>
