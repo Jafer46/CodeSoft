@@ -48,17 +48,16 @@ export default function SignUp () {
       navigate('/')
     } catch (err) {
       setLoading(false)
-      console.log('error')
       toast({
         variant: 'destructive',
-        title: 'Error',
+        title: err.message,
         description: 'Something went wrong!'
       })
     }
   }
   return (
     <div className='h-[100vh] w-full flex justify-center items-center'>
-      <div className='w-1/3 h-auto rounded-xl blur blur-low p-4 sm:max-lg:w-full'>
+      <div className='w-full h-auto rounded-xl blur blur-low p-4 md:w-1/3'>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -94,7 +93,7 @@ export default function SignUp () {
               placeHolder='ex ....'
               iconSrc=''
             />
-            <SubmitButton isLoading={loading}>Login</SubmitButton>
+            <SubmitButton isLoading={loading}>Sign up</SubmitButton>
           </form>
         </Form>
         <div className='flex items-center justify-center'>

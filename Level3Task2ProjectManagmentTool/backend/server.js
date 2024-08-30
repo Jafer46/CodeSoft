@@ -4,6 +4,7 @@ const dbconnection = require('./config/dbConnection')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const errorHandler = require('./middlewares/errorHandling')
+const { STATUSCODE } = require('./constants/statuscode')
 
 dbconnection()
 const port = process.env.PORT || 3000

@@ -1,7 +1,6 @@
 const { STATUSCODE } = require('../constants/statuscode')
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err)
   const statusCode = res.statusCode ? res.statusCode : 500
   switch (statusCode) {
     case STATUSCODE.VALIDATION_ERROR:
@@ -35,6 +34,13 @@ const errorHandler = (err, req, res, next) => {
     case STATUSCODE.FORBIDDEN:
       res.json({
         title: 'Forbidden',
+        message: err.message,
+        stackTrace: err.stack
+      })
+      break
+    case STATUSCODE.CONFLICT:
+      res.json({
+        title: 'Conflict',
         message: err.message,
         stackTrace: err.stack
       })

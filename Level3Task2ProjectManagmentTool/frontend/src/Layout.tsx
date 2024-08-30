@@ -1,8 +1,7 @@
 import { ReactNode, useState } from 'react'
 import Sidebar from './components/sidebar'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import TopBar from './components/topBar'
-import { Toaster } from './components/ui/toaster'
 import { ScrollArea } from './components/ui/scroll-area'
 import useAuth from './store'
 
@@ -21,7 +20,6 @@ export default function Layout () {
           <Outlet />
         </ScrollArea>
       </div>
-      <Toaster />
     </div>
   )
 }

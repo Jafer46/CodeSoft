@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-const conString = 'http://localhost:3000/api'
+import { baseURL } from '@/intercepter'
 
 interface User {
   username: string
@@ -16,7 +15,7 @@ interface Data {
 
 export const loginUser = (data: any) =>
   axios
-    .post<Data>(`${conString}/login`, data)
+    .post<Data>(`${baseURL}/login`, data)
     .then(res => res.data)
     .catch(err => {
       throw err
@@ -24,7 +23,7 @@ export const loginUser = (data: any) =>
 
 export const signup = (data: any) =>
   axios
-    .post<Data>(`${conString}/register`, data)
+    .post<Data>(`${baseURL}/register`, data)
     .then(res => res.data)
     .catch(err => {
       throw err
@@ -32,7 +31,7 @@ export const signup = (data: any) =>
 
 export const search = (query: string) =>
   axios
-    .get<User>(`${conString}/user/search?query=${query}`)
+    .get<User>(`${baseURL}/user/search?query=${query}`)
     .then(res => res.data)
     .catch(err => {
       throw err
@@ -40,14 +39,14 @@ export const search = (query: string) =>
 
 export const updateUser = (userData: User) =>
   axios
-    .put<User>(`${conString}/user/${userData}`, userData)
+    .put<User>(`${baseURL}/user/${userData}`, userData)
     .then(res => res.data)
     .catch(err => {
       throw err
     })
 export const getDashboard = (token: string) =>
   axios
-    .get(`${conString}/user/dashboerd`, {
+    .get(`${baseURL}/user/dashboerd`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => res.data)

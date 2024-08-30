@@ -38,7 +38,11 @@ export default function Login () {
       navigate('/')
     } catch (err) {
       setLoading(false)
-      console.log(err)
+      toast({
+        variant: 'destructive',
+        title: err.message,
+        description: 'Something went wrong!'
+      })
     }
   }
 

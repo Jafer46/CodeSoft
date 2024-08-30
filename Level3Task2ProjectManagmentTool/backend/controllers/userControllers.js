@@ -31,6 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
+
   if (!email || !password) {
     res.status(STATUSCODE.VALIDATION_ERROR)
     throw new Error('Mandatory fields needed')
