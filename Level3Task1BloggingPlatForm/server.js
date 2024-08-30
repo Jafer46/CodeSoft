@@ -30,7 +30,7 @@ app.use(
     secret: process.env.SESSION_SECERETE,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
+    store: mongoStore.create({
       mongoUrl: process.env.CONNECTION_STRING, // Database connection string
       collectionName: 'sessions', // Optional: specify your sessions collection
       ttl: 14 * 24 * 60 * 60 // Session expiration in seconds (optional)
