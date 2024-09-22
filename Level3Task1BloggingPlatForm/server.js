@@ -41,20 +41,12 @@ app.use(flash())
 app.use('/api', require('./routes/apiRoutes'))
 app.use('/', require('./routes/pagesRoutes'))
 
-// app.get('/', (req, res) => {
-//   res.render('index', { title: 'Hello' })
-// })
-
 app.get('/login', (req, res) => {
   res.render('login')
 })
 
 app.get('/signup', (req, res) => {
   res.render('signup')
-})
-
-app.get('/a', authenticate, (req, res) => {
-  res.render('a', { title: 'a', user: null })
 })
 
 app.get('/blog/create', (req, res) => {
