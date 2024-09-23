@@ -6,6 +6,10 @@ const projectSchema = mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'User'
     },
+    //the id for connecting to chatengine chat 
+    chatId: {
+      type: Number
+    },
     title: {
       type: String
     },

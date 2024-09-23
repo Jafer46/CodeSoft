@@ -14,6 +14,10 @@ const UserSchema = mongoose.Schema(
     password: {
       type: String
     },
+    //used to identify user for chatengine api with username
+    chatSecret: {
+      type: String
+    },
     avatar: {
       type: String
     }
