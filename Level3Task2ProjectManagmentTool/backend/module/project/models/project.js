@@ -2,21 +2,20 @@ const mongoose = require('mongoose')
 
 const projectSchema = mongoose.Schema(
   {
-    creatorId: {
+    user_id: {
       type: mongoose.Types.ObjectId,
       ref: 'User'
     },
-    //the id for connecting to chatengine chat 
-    chatId: {
+    chat_room_id: {
       type: Number
     },
-    title: {
+    name: {
       type: String
     },
     description: {
       type: String
     },
-    userList: {
+    user_list: {
       type: [mongoose.Types.ObjectId],
       ref: 'User'
     },
@@ -24,7 +23,8 @@ const projectSchema = mongoose.Schema(
       type: String
     },
     status: {
-      type: Number
+      enum: ['NOT_STARTED', 'IN_PROGRESS', 'COMPLETED'],
+      type: String
     },
     deadline: {
       type: Date

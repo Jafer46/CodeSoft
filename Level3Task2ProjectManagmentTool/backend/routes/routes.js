@@ -6,30 +6,21 @@ const {
   updateUser,
   getDashboard
 } = require('../controllers/userControllers')
-const {
-  createProject,
-  getUserProjects
-} = require('../controllers/projectControllers')
+
 const authenticate = require('../middlewares/authMiddleware')
-const {
-  createTask,
-  getProjectTasks,
-  getUserTasks,
-  updateTask,
-  deleteTask
-} = require('../controllers/taskControllers')
+const project_router = require('../module/project/routes/project_routes')
+const task_router = require('../module/project/routes/task_routes')
+
+
+
 router.route('/login').post(loginUser)
 router.route('/register').post(registerUser)
 router.route('/user/search').get(searchUser)
 router.put('/user/:id', authenticate, updateUser)
 router.get('/user/dashboerd', authenticate, getDashboard)
 
-router.post('/project', authenticate, createProject)
-router.get('/project/user', authenticate, getUserProjects)
+router.use('/project', authenticate, project_router)
+router.use('/task', authenticate, task_router)
 
-router.post('/task', authenticate, createTask)
-router.get('/task/project/:id', authenticate, getProjectTasks)
-router.get('/user/task', authenticate, getUserTasks)
-router.put('/task/:id', authenticate, updateTask)
-router.delete('/task/:id', authenticate, deleteTask)
+
 module.exports = router

@@ -1,21 +1,20 @@
 const asyncHandler = require('express-async-handler')
 const Task = require('../models/tasks')
-const { STATUSCODE } = require('../constants/statuscode')
+const { STATUSCODE } = require('../../../constants/statuscode')
 const Project = require('../models/project')
 
 const createTask = asyncHandler(async (req, res) => {
   const createdBy = req.user.id
-  const {
-    title,
+  const {name,
     description,
-    partOf,
+    project_id,
     completed = false,
     assignedUsers
   } = req.body
   const task = await Task.create({
-    title,
+    name,
     description,
-    partOf,
+    project_id,
     createdBy,
     completed,
     assignedUsers
@@ -29,13 +28,13 @@ const updateTask = asyncHandler(async (req, res) => {
     res.status(STATUSCODE.NOT_FOUND)
     throw new Error('Task is not found')
   }
-  const { title, description, completed, assignedUsers } = req.body
-  task.title = title
+  const { name, description, completed, assignedUsers } = req.body
+  task.name = name
   task.description = description
   task.completed = completed
   task.assignedUsers = assignedUsers
   if (completed) {
-    const project = await Project.findOne({ _id: task.partOf })
+    const project = await Project.findOne({ _id: task.project_id })
     project.status = 1
     await project.save()
   }
@@ -55,7 +54,7 @@ const deleteTask = asyncHandler(async (req, res) => {
 
 const getProjectTasks = asyncHandler(async (req, res) => {
   const projectId = req.params.id
-  const tasks = await Task.find({ partOf: projectId })
+  const tasks = await Task.find({ project_id: projectId })
   return res.status(200).json(tasks)
 })
 

@@ -3,8 +3,8 @@ const User = require('../models/user')
 const { STATUSCODE } = require('../constants/statuscode')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const Project = require('../models/project')
-const Task = require('../models/tasks')
+const Project = require('../module/project/models/project')
+const Task = require('../module/project/models/tasks')
 
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, username, email, password } = req.body
